@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-
+using UnityEngine.SceneManagement;
 /**
 * レーザーポインターを出すクラス
 */
@@ -40,7 +40,7 @@ public class LaserPointer : MonoBehaviour {
 	}
 
 	public GameObject player;
-	bool hold_flag = false;
+	public bool hold_flag = false;
 	private GameObject target_obj;
 	string hold_obj_tag;
 	public CharacterManager characterManager;
@@ -48,6 +48,7 @@ public class LaserPointer : MonoBehaviour {
 	public CanvasGroup CharacterCanvasGroup;
 	bool fadeIn = true;
 	// private Vector3 dt = new Vector3(0, 0, 0);
+	private PlayerManager playerManager;
 
 	void Update () {
 
@@ -80,7 +81,9 @@ public class LaserPointer : MonoBehaviour {
 		if (Physics.Raycast(pointerRay, out hitInfo, _MaxDistance)) {
 			// Rayがヒットしたらそこまで
 			_LaserPointerRenderer.SetPosition(1, hitInfo.point);
+			//トリガー押したら
 			if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger)){
+
 				if(hitInfo.collider.tag == "Character")
 				{
 					CharacterCanvasGroup.DOFade(1,1);
@@ -93,13 +96,14 @@ public class LaserPointer : MonoBehaviour {
 					else hold_flag = true;
 				}
 			}
+
 		} else {
 			// Rayがヒットしなかったら向いている方向にMaxDistance伸ばす
 			_LaserPointerRenderer.SetPosition(1, pointerRay.origin + pointerRay.direction * _MaxDistance);
 		}
 
 		if(hold_flag){
-			target_obj.transform.position = pointer.position + pointer.forward ;
+			target_obj.transform.position = pointer.position + pointer.forward;
 		}
 	}
 }

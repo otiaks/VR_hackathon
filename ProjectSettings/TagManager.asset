@@ -11,6 +11,8 @@ TagManager:
   - Mentos
   - Clean
   - Character
+  - Button
+  - Title
   layers:
   - Default
   - TransparentFX

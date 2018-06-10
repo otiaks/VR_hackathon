@@ -4,10 +4,12 @@ using UnityEngine;
 using UniRx;
 public class PlayerManager : MonoBehaviour {
 	public ReactiveProperty<GameObject> HasGameObject = new ReactiveProperty<GameObject>();
+	public Canvas canvas;
+	public LaserPointer laserPointer;
 
-	private LaserPointer laserPointer;
 	public void GenerateObject(GameObject Obj)
 	{
-		GameObject obj = Instantiate(Obj, laserPointer.Pointer.position, transform.rotation);
+		GameObject obj = Instantiate(Obj, laserPointer.Pointer.transform.position, transform.rotation);
 	}
+
 }
